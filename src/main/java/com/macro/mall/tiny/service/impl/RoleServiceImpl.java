@@ -50,7 +50,6 @@ public class RoleServiceImpl implements RoleService {
         long roleId=roleMenus.get(0).getRoleId();
         umsRoleMapper.deleteRoleMenu(roleId);
         return  umsRoleMapper.batchInsertRoleMenu(roleMenus);
-
     }
 
     @Override

@@ -32,4 +32,5 @@
             pr.type = 1
             AND pr.admin_id = #{adminId}
     </select>
+
 </mapper>

@@ -4,7 +4,9 @@ import com.macro.mall.tiny.common.utils.JwtTokenUtil;
 import com.macro.mall.tiny.dao.UmsAdminRoleRelationDao;
 import com.macro.mall.tiny.dto.ChangePassword;
 import com.macro.mall.tiny.dto.UmsAdminLoginParam;
+import com.macro.mall.tiny.mbg.mapper.SysMenuMapper;
 import com.macro.mall.tiny.mbg.mapper.UmsAdminMapper;
+import com.macro.mall.tiny.mbg.model.SysMenu;
 import com.macro.mall.tiny.mbg.model.UmsAdmin;
 import com.macro.mall.tiny.mbg.model.UmsAdminExample;
 import com.macro.mall.tiny.mbg.model.UmsPermission;
@@ -46,6 +48,8 @@ public class UmsAdminServiceImpl implements UmsAdminService {
     private UmsAdminMapper adminMapper;
     @Autowired
     private UmsAdminRoleRelationDao adminRoleRelationDao;
+    @Autowired
+    private SysMenuMapper sysMenuMapper;
 
     @Override
     public UmsAdmin getAdminByUsername(String username) {
@@ -88,6 +92,7 @@ public class UmsAdminServiceImpl implements UmsAdminService {
             }
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
+            LOGGER.info("权限",authentication);
             token = jwtTokenUtil.generateToken(userDetails);
         } catch (AuthenticationException e) {
             LOGGER.warn("登录异常:{}", e.getMessage());
@@ -100,6 +105,8 @@ public class UmsAdminServiceImpl implements UmsAdminService {
     public List<UmsPermission> getPermissionList(Long adminId) {
         return adminRoleRelationDao.getPermissionList(adminId);
     }
+
+
 
     @Override
     public int changePassword(ChangePassword params) {
@@ -118,5 +125,11 @@ public class UmsAdminServiceImpl implements UmsAdminService {
         userInfo.setPassword(encodePassword);
         int res=adminMapper.updateByPrimaryKey(userInfo);
         return res;
+    }
+
+    @Override
+    public List<SysMenu> getUserPermissionList(long id) {
+
+        return sysMenuMapper.selectAdminUserPermissionMenuById(id);
     }
 }

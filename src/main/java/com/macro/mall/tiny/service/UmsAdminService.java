@@ -1,6 +1,7 @@
 package com.macro.mall.tiny.service;
 
 import com.macro.mall.tiny.dto.ChangePassword;
+import com.macro.mall.tiny.mbg.model.SysMenu;
 import com.macro.mall.tiny.mbg.model.UmsAdmin;
 import com.macro.mall.tiny.mbg.model.UmsPermission;
 
@@ -38,4 +39,6 @@ public interface UmsAdminService {
      */
 
     int changePassword (ChangePassword params);
+
+     List<SysMenu> getUserPermissionList(long id);
 }

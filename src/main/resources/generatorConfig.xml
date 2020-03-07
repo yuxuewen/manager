@@ -39,8 +39,8 @@
 <!--                    <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
 <!--                </table>-->
         <!--生成全部表tableName设为%-->
-<!--        <table tableName="sys_menu">-->
-<!--            <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+<!--        <table tableName="sys_dict_data">-->
+<!--            <generatedKey column="dict_code" sqlStatement="MySql" identity="true"/>-->
 <!--        </table>-->
         <!--生成全部表tableName设为%-->
 <!--        <table tableName="pms_brand">-->

@@ -30,4 +30,7 @@ public interface SysMenuMapper {
     int updateByPrimaryKey(SysMenu record);
 
     List<SysMenu> selectRoleMenu(Long[] roleId);
+
+    List<SysMenu> selectAdminUserPermissionMenuById(long id);
+
 }

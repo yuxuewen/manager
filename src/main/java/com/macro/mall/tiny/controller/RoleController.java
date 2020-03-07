@@ -31,6 +31,7 @@ public class RoleController {
     @RequestMapping(value = "getRoleListAll", method = RequestMethod.GET)
     @ResponseBody
 
+    @PreAuthorize("hasAuthority('system:role:query')")
     public CommonResult<List<UmsRole>> getRoleListAll() {
         return CommonResult.success(roleService.getRoleList());
     }

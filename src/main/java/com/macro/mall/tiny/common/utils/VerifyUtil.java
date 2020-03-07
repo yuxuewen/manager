@@ -1,5 +1,6 @@
 package com.macro.mall.tiny.common.utils;
 import javax.imageio.ImageIO;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -46,7 +47,7 @@ public class VerifyUtil {
     /**
      * 生成随机图片
      */
-    public void getRandcode(HttpServletRequest request, HttpServletResponse response) {
+    public String getRandcode(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         // BufferedImage类是具有缓冲区的Image类,Image类是用于描述图像信息的类
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_BGR);
@@ -72,8 +73,10 @@ public class VerifyUtil {
         try {
             // 将内存中的图片通过流动形式输出到客户端
             ImageIO.write(image, "JPEG", response.getOutputStream());
+
         } catch (Exception e) {
         }
+        return  randomString;
 
     }
 

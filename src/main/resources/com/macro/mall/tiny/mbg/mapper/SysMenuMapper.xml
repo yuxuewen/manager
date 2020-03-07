@@ -121,6 +121,16 @@
     and delete_flag=0
   </select>
 
+  <select id="selectAdminUserPermissionMenuById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    DISTINCT
+    <include refid="Role_Menu_Column_List" />
+    from sys_menu as sm join ums_role_menu as rm on sm.id= rm.menu_id
+    where
+     find_in_set(rm.role_id,(select ua.role  from ums_admin as ua where id= #{id,jdbcType=BIGINT}))
+    and delete_flag=0
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     update sys_menu
     set delete_flag = 1

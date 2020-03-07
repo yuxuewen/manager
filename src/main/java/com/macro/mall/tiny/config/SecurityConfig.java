@@ -4,6 +4,7 @@ import com.macro.mall.tiny.component.JwtAuthenticationTokenFilter;
 import com.macro.mall.tiny.component.RestAuthenticationEntryPoint;
 import com.macro.mall.tiny.component.RestfulAccessDeniedHandler;
 import com.macro.mall.tiny.dto.AdminUserDetails;
+import com.macro.mall.tiny.mbg.model.SysMenu;
 import com.macro.mall.tiny.mbg.model.UmsAdmin;
 import com.macro.mall.tiny.mbg.model.UmsPermission;
 import com.macro.mall.tiny.service.UmsAdminService;
@@ -41,7 +42,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private RestfulAccessDeniedHandler restfulAccessDeniedHandler;
     @Autowired
     private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
-
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf()// 由于使用的是JWT，我们这里不需要csrf
@@ -61,7 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/v2/api-docs/**"
                 )
                 .permitAll()
-                .antMatchers("/admin/login", "/admin/register","/admin/getVerifyCode")// 对登录注册要允许匿名访问
+                .antMatchers("/admin/login", "/admin/register","/admin/getVerifyCode","/sso/getAuthCode","/sso/verifyAuthCode")// 对登录注册要允许匿名访问
                 .permitAll()
                 .antMatchers(HttpMethod.OPTIONS)//跨域请求会先进行一次options请求
                 .permitAll()
@@ -71,6 +71,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticated();
         // 禁用缓存
         httpSecurity.headers().cacheControl();
+
         // 添加JWT filter
         httpSecurity.addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
         //添加自定义未授权和未登录结果返回
@@ -96,7 +97,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return username -> {
             UmsAdmin admin = adminService.getAdminByUsername(username);
             if (admin != null) {
-                List<UmsPermission> permissionList = adminService.getPermissionList(admin.getId());
+                List<SysMenu> permissionList = adminService.getUserPermissionList(admin.getId());
+
                 return new AdminUserDetails(admin,permissionList);
             }
             throw new UsernameNotFoundException("用户名或密码错误");
