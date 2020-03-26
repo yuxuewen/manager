@@ -61,14 +61,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/v2/api-docs/**"
                 )
                 .permitAll()
-                .antMatchers("/admin/login", "/admin/register","/admin/getVerifyCode","/sso/getAuthCode","/sso/verifyAuthCode")// 对登录注册要允许匿名访问
+                .antMatchers("/admin/login", "/admin/register","/admin/getVerifyCode","/sso/getAuthCode","/sso/verifyAuthCode","/file/uploadFile")// 对登录注册要允许匿名访问
                 .permitAll()
                 .antMatchers(HttpMethod.OPTIONS)//跨域请求会先进行一次options请求
                 .permitAll()
-//                .antMatchers("/**")//测试时全部运行访问
-//                .permitAll()
-                .anyRequest()// 除上面外的所有请求全部需要鉴权认证
-                .authenticated();
+                .antMatchers("/**")//测试时全部运行访问
+                .permitAll();
+//                .anyRequest()// 除上面外的所有请求全部需要鉴权认证
+//                .authenticated();
         // 禁用缓存
         httpSecurity.headers().cacheControl();
 

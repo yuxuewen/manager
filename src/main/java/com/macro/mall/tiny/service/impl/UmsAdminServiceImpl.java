@@ -1,6 +1,7 @@
 package com.macro.mall.tiny.service.impl;
 
 import com.macro.mall.tiny.common.utils.JwtTokenUtil;
+import com.macro.mall.tiny.config.RedisConfig;
 import com.macro.mall.tiny.dao.UmsAdminRoleRelationDao;
 import com.macro.mall.tiny.dto.ChangePassword;
 import com.macro.mall.tiny.dto.UmsAdminLoginParam;
@@ -16,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -100,13 +102,11 @@ public class UmsAdminServiceImpl implements UmsAdminService {
         return token;
     }
 
-
+    @Cacheable(value = RedisConfig.REDIS_KEY_DATABASE, key = "'sys:permission:'+#adminId", unless = "#result==null")
     @Override
     public List<UmsPermission> getPermissionList(Long adminId) {
         return adminRoleRelationDao.getPermissionList(adminId);
     }
-
-
 
     @Override
     public int changePassword(ChangePassword params) {

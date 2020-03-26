@@ -1,5 +1,8 @@
 package com.macro.mall.tiny.mbg.model;
 
+import com.macro.mall.tiny.common.utils.ValidatorUtil;
+import com.macro.mall.tiny.component.valid.CanEmptyValueValidator;
+import com.macro.mall.tiny.component.valid.FlagValidator;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.constraints.NotEmpty;
@@ -8,10 +11,10 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class SysDept implements Serializable {
+
     @ApiModelProperty(value = "部门id")
     private Long deptId;
    @NotNull(message = "父部门id不能为空")
-   @NotEmpty(message = "父部门id不能为空")
     @ApiModelProperty(value = "父部门id")
     private Long parentId;
 
@@ -30,15 +33,16 @@ public class SysDept implements Serializable {
     private String leader;
 
     @ApiModelProperty(value = "联系电话")
+    @CanEmptyValueValidator(parrern = ValidatorUtil.REGEX_MOBILE,message = "手机号码格式不正确")
     private String phone;
 
     @ApiModelProperty(value = "邮箱")
+    @CanEmptyValueValidator(parrern = ValidatorUtil.REGEX_EMAIL,message = "邮箱格式不正确")
     private String email;
-
     @ApiModelProperty(value = "部门状态（0正常 1停用）")
+    @FlagValidator(value = {"0","1"},message = "状态错误：部门状态（0正常 1停用）")
     private String status;
 
-    @ApiModelProperty(value = "删除标志（0代表存在 2代表删除）")
     private String delFlag;
 
     @ApiModelProperty(value = "创建者")

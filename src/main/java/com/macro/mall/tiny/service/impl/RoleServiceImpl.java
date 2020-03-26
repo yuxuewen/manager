@@ -3,6 +3,7 @@ package com.macro.mall.tiny.service.impl;
 import com.alibaba.druid.util.StringUtils;
 import com.github.pagehelper.PageHelper;
 import com.macro.mall.tiny.bean.RoleMenu;
+import com.macro.mall.tiny.config.RedisConfig;
 import com.macro.mall.tiny.dto.SearchRoleRarams;
 import com.macro.mall.tiny.mbg.mapper.SysMenuMapper;
 import com.macro.mall.tiny.mbg.mapper.UmsRoleMapper;
@@ -11,6 +12,7 @@ import com.macro.mall.tiny.mbg.model.UmsRole;
 import com.macro.mall.tiny.mbg.model.UmsRoleExample;
 import com.macro.mall.tiny.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,12 +47,14 @@ public class RoleServiceImpl implements RoleService {
         return umsRoleMapper.deleteByPrimaryKey(id);
     }
 
+
     @Override
     public Integer insertRoleMenu(List<RoleMenu> roleMenus) {
         long roleId=roleMenus.get(0).getRoleId();
         umsRoleMapper.deleteRoleMenu(roleId);
         return  umsRoleMapper.batchInsertRoleMenu(roleMenus);
     }
+
 
     @Override
     public  List<SysMenu> getRoleMenus(String roleIds) {

@@ -35,12 +35,12 @@
         <!--指定生成mapper接口的的路径-->
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.macro.mall.tiny.mbg.mapper"
                              targetProject="src\main\java"/>
-<!--                <table tableName="ums_role">-->
+<!--                <table tableName="sc_subject">-->
 <!--                    <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
 <!--                </table>-->
-        <!--生成全部表tableName设为%-->
-<!--        <table tableName="sys_dict_data">-->
-<!--            <generatedKey column="dict_code" sqlStatement="MySql" identity="true"/>-->
+<!--        生成全部表tableName设为%-->
+<!--        <table tableName="sc_class">-->
+<!--            <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
 <!--        </table>-->
         <!--生成全部表tableName设为%-->
 <!--        <table tableName="pms_brand">-->

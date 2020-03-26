@@ -1,5 +1,6 @@
 package com.macro.mall.tiny.service.impl;
 
+import com.macro.mall.tiny.config.RedisConfig;
 import com.macro.mall.tiny.mbg.mapper.SysMenuMapper;
 import com.macro.mall.tiny.mbg.model.PmsBrandExample;
 import com.macro.mall.tiny.mbg.model.SysMenu;
@@ -7,6 +8,7 @@ import com.macro.mall.tiny.mbg.model.SysMenuExample;
 import com.macro.mall.tiny.service.SysMenuService;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +16,7 @@ import java.util.List;
 public class SysMenuServiceImpl implements SysMenuService {
     @Autowired
     private SysMenuMapper sysMenuMapper;
+
     @Override
     public List<SysMenu> getMenuList() {
         SysMenuExample sysMenuExample=new SysMenuExample();
